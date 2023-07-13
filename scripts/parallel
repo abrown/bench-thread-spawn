@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+import os
+
+exe = os.environ['EXE']
+delay = '0.01'
+script_dir = os.path.dirname(os.path.realpath(__file__))
+statistics_script = script_dir + os.path.sep + 'statistics'
+
+
+def run(cmd):
+    os.system(cmd)
+
+
+print()
+print('Calculate the spawn time (in microseconds) for a single thread (in 100 new processes).')
+print(f'> {exe} 1')
+file = 'parallel-1-thread.txt'
+run(f'rm -f {file}')
+for _ in range(0, 100):
+    run(f'sleep {delay}')
+    run(f'{exe} 1 >> {file}')
+run(f'cat {file} | {statistics_script}')
+
+print()
+print('Calculate the spawn times (in microseconds) for each of 10 threads spawned in parallel (in 10 new processes--100 samples).')
+print(f'> {exe} 10')
+file = 'parallel-10-threads.txt'
+run(f'rm -f {file}')
+for _ in range(0, 10):
+    run(f'sleep {delay}')
+    run(f'{exe} 10 >> {file}')
+run(f'cat {file} | {statistics_script}')
+
+print()
+print('Calculate the spawn times (in microseconds) for each of 100 threads spawned in parallel in a single process.')
+print(f'> {exe} 100')
+file = 'parallel-100-threads.txt'
+run(f'rm -f {file}')
+run(f'{exe} 100 >> {file}')
+run(f'cat {file} | {statistics_script}')
+
+print()
+print('Calculate the spawn times (in microseconds) to spawn each of 1000 threads spawned in parallel in a single process.')
+print(f'> {exe} 1000')
+file = 'parallel-1000-threads.txt'
+run(f'rm -f {file}')
+run(f'{exe} 1000 >> {file}')
+run(f'cat {file} | {statistics_script}')

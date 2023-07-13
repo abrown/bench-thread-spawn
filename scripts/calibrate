@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import statistics
+
+exe = os.environ['EXE']
+script_dir = os.path.dirname(os.path.realpath(__file__))
+statistics_script = script_dir + os.path.sep + 'statistics'
+
+
+def run(cmd):
+    print(f'> {cmd}')
+    os.system(cmd)
+
+
+print()
+print('Do the printed result and `time` both match 1us? (Expect some overhead here)')
+run(f'time {exe} 1')
+
+print()
+print('Do the printed result and `time` both match  1ms?')
+run(f'time {exe} 1000')
+
+print()
+print('Do the printed result and `time` both match  1s?')
+run(f'time {exe} 1000000')

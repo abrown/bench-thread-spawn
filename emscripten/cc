@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Compile a C file for Web Workers using an Emscripten installation.
+#
+# Usage: cc foo.c -o foo.wasm (or foo.js or foo.html)
+
+set -e
+EMSDK_DIR=${EMSDK_DIR:="../emsdk"}
+CC="emcc"
+CFLAGS="-pthread"
+LDFLAGS=""
+
+if [[ ! $(type -P emcc) ]]; then
+    echo "Attempting to setup Emscripten using emsdk at: $EMSDK_DIR"
+    source $EMSDK_DIR/emsdk_env.sh
+fi
+
+(set -x; $CC $CFLAGS $LDFLAGS $@)

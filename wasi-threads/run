@@ -1,0 +1,14 @@
+#! /usr/bin/env bash
+
+# Run a wasi-threads program with Wasmtime
+#
+# Usage: run foo.wasm
+
+WASMTIME=${WASMTIME:=../wasmtime/target/release/wasmtime}
+if [[ ! -f "$WASMTIME" ]]; then
+    echo "Could not find a Wasmtime binary at: $WASMTIME"
+    echo "You may need to set \`WASMTIME=<path to binary> run\`"
+    exit 1
+fi
+
+$WASMTIME run --wasm-features=threads --wasi-modules=experimental-wasi-threads $@

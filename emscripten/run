@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+# Run an Emscripten program with NodeJS
+#
+# Usage: run foo.js
+
+if [[ ! $(type -P node) ]]; then
+    echo "Could not find a NodeJS binary on the path"
+    exit 1
+fi
+
+node $@
